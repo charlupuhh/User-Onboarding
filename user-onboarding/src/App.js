@@ -14,6 +14,7 @@ const initialFormValues = {
   username: '',
   password: '',
   email: '',
+  classes: [],
   TOS: ''
 }
 
@@ -21,6 +22,7 @@ const initialFormErrors = {
   username: '',
   password: '',
   email: '',
+  classes: [],
   TOS: ''
 }
 
@@ -67,7 +69,7 @@ function App() {
       .catch(err => {
         setFormErrors({
           ...formErrors,
-          [name]:""
+          [name]: err.errors[0]
         });
       })
     
@@ -77,9 +79,13 @@ function App() {
     })
   }
 
+  const buttonClick = evt => {
+    const {name, value} = evt.target
+  }
+
   const onCheckboxChange = evt =>{
     const {name, checked} = evt.target
-
+    
     setFormValues({
       ...formValues,
       [name]:checked
@@ -111,6 +117,7 @@ function App() {
       <Form 
         values={formValues}
         onInputChange={onInputChange}
+        buttonClick={buttonClick}
         onCheckboxChange={onCheckboxChange}
         onSubmit={onSubmit}
         disabled={disabled}
